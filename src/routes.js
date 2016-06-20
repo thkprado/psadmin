@@ -13,6 +13,7 @@ const routes = (
     <IndexRoute component={HomePage} />
     <Route path="authors" component={AuthorPage} />
     <Route path="author" component={ManageAuthorPage} />
+    <Route path="author/:id" component={ManageAuthorPage} />
     <Route
       path="about" component={AboutPage}
       onEnter={AboutPage.onEnter} onLeave={AboutPage.onLeave}

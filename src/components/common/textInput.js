@@ -1,6 +1,6 @@
 const React = require('react');
 
-function Input({ label, name, value, placeholder, error, onChange }) {
+function Input({ label, name, value, placeholder, onChange, error }) {
   let wrapperClass = 'form-group';
   if (error && error.length > 0) {
     wrapperClass += ' has-error';
