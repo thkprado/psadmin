@@ -1,5 +1,5 @@
 // This file is mocking a web API by hitting hard coded data.
-const authors = require('./authorData').authors;
+const { authors } = require('./authorData');
 const _ = require('lodash');
 
 // This would be performed on the server in a real app. Just stubbing in.
@@ -7,7 +7,6 @@ const generateId = (author) => `${author.firstName.toLowerCase()}-${author.lastN
 
 // Return cloned copy so that the item is passed by value instead of by reference
 const clone = (item) => JSON.parse(JSON.stringify(item));
-
 
 const AuthorApi = {
   getAllAuthors: () => clone(authors),

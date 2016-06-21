@@ -1,7 +1,8 @@
 const React = require('react');
 const { withRouter } = require('react-router');
 const AuthorForm = require('./authorForm');
-const AuthorApi = require('../../api/authorApi');
+const AuthorActions = require('../../actions/authorActions');
+const AuthorStore = require('../../stores/authorStore');
 const toastr = require('toastr');
 
 class ManageAuthorPage extends React.Component {
@@ -23,7 +24,7 @@ class ManageAuthorPage extends React.Component {
   componentWillMount() {
     const authorId = this.props.params.id; // from the path '/author/:id'
     if (authorId) {
-      this.setState({ author: AuthorApi.getAuthorById(authorId) });
+      this.setState({ author: AuthorStore.getAuthorById(authorId) });
     }
   }
 
@@ -66,7 +67,11 @@ class ManageAuthorPage extends React.Component {
     if (!this.authorFormIsValid()) {
       return;
     }
-    AuthorApi.saveAuthor(this.state.author);
+    if (this.state.author.id) {
+      AuthorActions.updateAuthor(this.state.author);
+    } else {
+      AuthorActions.createAuthor(this.state.author);
+    }
     this.setState({ dirty: false }, () => {
       toastr.success('Author saved.');
       this.props.router.push('authors');

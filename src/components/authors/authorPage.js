@@ -1,21 +1,23 @@
 const React = require('react');
-
 const { Link } = require('react-router');
-
-const AuthorApi = require('../../api/authorApi');
+const AuthorStore = require('../../stores/authorStore');
 const AuthorList = require('./authorList');
 
 class AuthorsPage extends React.Component {
   constructor(props) {
     super(props);
     // Set up initial state
-    this.state = {
-      authors: [],
-    };
+    this.state = { authors: AuthorStore.getAllAuthors() };
+    this.onChange = this.onChange.bind(this);
   }
   componentWillMount() {
-    // this.onMount(() => this.setState({ authors: AuthorApi.getAllAuthors() }));
-    this.setState({ authors: AuthorApi.getAllAuthors() });
+    AuthorStore.addChangeListener(this.onChange);
+  }
+  componentWillUnmount() {
+    AuthorStore.removeChangeListener(this.onChange);
+  }
+  onChange() {
+    this.setState({ author: AuthorStore.getAllAuthors() });
   }
   render() {
     return (
